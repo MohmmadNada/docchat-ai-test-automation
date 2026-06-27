@@ -1,0 +1,4 @@
+DocChat AI is an AI-powered document Q&A tool.
+It supports TXT, PDF, DOC, and DOCX files up to 1 MB.
+Users can upload a document and ask questions about its content.
+The AI answers are grounded in the uploaded document.
