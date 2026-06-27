@@ -1,0 +1,18 @@
+{
+  "browser": {
+    "browserName": "chromium",
+    "launchOptions": {
+      "headless": false
+    },
+    "contextOptions": {
+      "viewport": { "width": 1440, "height": 900 }
+    }
+  },
+  "codegen": "typescript",
+  "saveSession": true,
+  "outputDir": ".playwright/output",
+  "timeouts": {
+    "action": 10000,
+    "navigation": 30000
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "docchat-ai-test-automation",
+  "version": "1.0.0",
+  "description": "E2E test automation framework for DocChat AI",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report",
+    "allure:generate": "allure generate allure-results --clean -o allure-report",
+    "allure:open": "allure open allure-report",
+    "explore": "playwright-cli open https://sdet-chatbot.onrender.com",
+    "generate": "playwright-cli open https://sdet-chatbot.onrender.com --codegen",
+    "cli:sessions": "playwright-cli list",
+    "cli:dashboard": "playwright-cli show"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MohmmadNada/docchat-ai-test-automation.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MohmmadNada/docchat-ai-test-automation/issues"
+  },
+  "homepage": "https://github.com/MohmmadNada/docchat-ai-test-automation#readme",
+  "devDependencies": {
+    "@playwright/cli": "^0.1.14",
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.0.1",
+    "allure-playwright": "^3.10.2",
+    "typescript": "^6.0.3"
+  }
+}
