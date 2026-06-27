@@ -6,6 +6,7 @@ allure-report/
 test-results/
 .env
 .env.local
+storageState.json
 .playwright/output/
 data/documents/.playwright-cli
 .claude/
