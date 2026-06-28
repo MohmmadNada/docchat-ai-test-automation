@@ -6,11 +6,16 @@ export class ChatPage {
   private readonly chatInput: Locator;
 
   private readonly uploadErrorNotification: Locator;
+  private readonly aiResponseBubble: Locator;
+  private readonly citationChip: Locator;
 
   constructor(private readonly page: Page) {
     this.dropzone  = page.getByTestId('file-upload-dropzone');
     this.chatInput = page.getByRole('textbox', { name: /Ask a question about your document/i });
     this.uploadErrorNotification = page.getByText('File too large', { exact: true });
+    // AI bubbles use flex-row; user bubbles use flex-row-reverse — distinct Tailwind classes
+    this.aiResponseBubble = page.locator('.animate-fade-in.flex-row');
+    this.citationChip     = page.locator('span.rounded-full');
   }
 
   async goto(): Promise<void> {
@@ -61,6 +66,29 @@ export class ChatPage {
 
   async isUploadErrorVisible(): Promise<boolean> {
     return this.uploadErrorNotification.isVisible();
+  }
+
+  async sendMessage(text: string): Promise<void> {
+    await this.chatInput.fill(text);
+    await this.page.keyboard.press('Enter');
+  }
+
+  async isChatInputEmpty(): Promise<boolean> {
+    return (await this.chatInput.inputValue()) === '';
+  }
+
+  /** Waits until the first AI response bubble contains a visible paragraph — accounts for API latency. */
+  async waitForAIResponse(): Promise<void> {
+    await this.aiResponseBubble.first().locator('p').first().waitFor({ state: 'visible' });
+  }
+
+  async isLastAIResponseNonEmpty(): Promise<boolean> {
+    const text = await this.aiResponseBubble.last().locator('p').first().innerText();
+    return text.trim().length > 0;
+  }
+
+  async isCitationChipVisible(filename: string): Promise<boolean> {
+    return this.citationChip.filter({ hasText: filename }).first().isVisible();
   }
 
   async isChatInterfaceVisible(): Promise<boolean> {
