@@ -21,4 +21,14 @@ test.describe('File Upload', () => {
       expect(await chatPage.isDocumentTabVisible(file)).toBe(true);
     });
   }
+
+  for (const { tcId, file } of uploadData.oversizedFiles) {
+    test(`${tcId} — should reject ${file} with a file-too-large error`, async ({ chatPage }) => {
+      await chatPage.attemptUpload(path.join(DOCS_DIR, file));
+      await chatPage.waitForUploadError();
+
+      expect(await chatPage.isUploadErrorVisible()).toBe(true);
+      expect(await chatPage.isChatInterfaceVisible()).toBe(false);
+    });
+  }
 });

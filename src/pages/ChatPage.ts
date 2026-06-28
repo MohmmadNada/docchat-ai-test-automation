@@ -5,9 +5,12 @@ export class ChatPage {
   private readonly dropzone: Locator;
   private readonly chatInput: Locator;
 
+  private readonly uploadErrorNotification: Locator;
+
   constructor(private readonly page: Page) {
     this.dropzone  = page.getByTestId('file-upload-dropzone');
     this.chatInput = page.getByRole('textbox', { name: /Ask a question about your document/i });
+    this.uploadErrorNotification = page.getByText('File too large', { exact: true });
   }
 
   async goto(): Promise<void> {
@@ -41,6 +44,23 @@ export class ChatPage {
     ]);
     await fileChooser.setFiles(filePath);
     await this.page.getByText(filename, { exact: true }).waitFor({ state: 'visible' });
+  }
+
+  /** Triggers the file chooser via the dropzone without waiting for any outcome. Use for error-path tests where no filename tab should appear. */
+  async attemptUpload(filePath: string): Promise<void> {
+    const [fileChooser] = await Promise.all([
+      this.page.waitForEvent('filechooser'),
+      this.dropzone.click(),
+    ]);
+    await fileChooser.setFiles(filePath);
+  }
+
+  async waitForUploadError(): Promise<void> {
+    await this.uploadErrorNotification.waitFor({ state: 'visible' });
+  }
+
+  async isUploadErrorVisible(): Promise<boolean> {
+    return this.uploadErrorNotification.isVisible();
   }
 
   async isChatInterfaceVisible(): Promise<boolean> {

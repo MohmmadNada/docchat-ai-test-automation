@@ -3,5 +3,8 @@
     { "tcId": "TC-UPL-003", "file": "valid-small.txt" },
     { "tcId": "TC-UPL-004", "file": "valid-small.pdf" },
     { "tcId": "TC-UPL-006", "file": "valid-small.docx" }
+  ],
+  "oversizedFiles": [
+    { "tcId": "TC-UPL-019", "file": "invalid-over-1mb.txt" }
   ]
 }
